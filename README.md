@@ -17,7 +17,8 @@ them.
 If you haven't already, fork and clone this lab into your local environment.
 Navigate into its directory in the terminal, then run `code .` to open the files
 in Visual Studio Code. (If you are using a different text editor, the command
-will be different.)
+will be different.) Finally, run `npm install` to install the lab's
+dependencies.
 
 ### Code-Along
 
@@ -84,13 +85,13 @@ per function, but let's start with this one.
 
 ### Running the Tests
 
-To run the tests, run `learn test` in the terminal. The first output you'll see
-will look something like this:
+To run the tests, run `npm install` followed by `npm test` in the terminal. The first output you'll see
+will look like this:
 
 ```console
-$ learn test
+$ npm test
 > java-script-intro-to-functions-lab@0.1.0 test
-> mocha --timeout 5000 -R mocha-multi --reporter-options spec=-,json=.results.json
+> mocha
 
 
 
@@ -112,87 +113,54 @@ $ learn test
     7) returns "I would love to!" if `string` is "Let's have dinner together!"`
 
 
-  0 passing (120ms)
+  0 passing (133ms)
   7 failing
 
   1) shout(string)
        receives one argument and returns it in all caps:
      ReferenceError: shout is not defined
       at Context.<anonymous> (test/index-test.js:4:5)
-      at processImmediate (internal/timers.js:461:21)
+      at processImmediate (node:internal/timers:464:21)
 
   2) whisper(string)
        receives one argument and returns it in all lowercase:
      ReferenceError: whisper is not defined
       at Context.<anonymous> (test/index-test.js:10:5)
-      at processImmediate (internal/timers.js:461:21)
+      at processImmediate (node:internal/timers:464:21)
 
   3) logShout(string)
        takes a string argument and logs it in all caps using console.log():
      ReferenceError: logShout is not defined
       at Context.<anonymous> (test/index-test.js:18:5)
-      at processImmediate (internal/timers.js:461:21)
+      at processImmediate (node:internal/timers:464:21)
 
   4) logWhisper(string)
        takes a string argument and logs it in all lowercase using console.log():
      ReferenceError: logWhisper is not defined
       at Context.<anonymous> (test/index-test.js:30:5)
-      at processImmediate (internal/timers.js:461:21)
+      at processImmediate (node:internal/timers:464:21)
 
   5) sayHiToHeadphonedRoommate(string)
        returns "I can't hear you!" if `string` is lowercase:
      ReferenceError: sayHiToHeadphonedRoommate is not defined
       at Context.<anonymous> (test/index-test.js:40:5)
-      at processImmediate (internal/timers.js:461:21)
+      at processImmediate (node:internal/timers:464:21)
 
   6) sayHiToHeadphonedRoommate(string)
        returns "YES INDEED!" if `string` is uppercase:
      ReferenceError: sayHiToHeadphonedRoommate is not defined
       at Context.<anonymous> (test/index-test.js:44:5)
-      at processImmediate (internal/timers.js:461:21)
+      at processImmediate (node:internal/timers:464:21)
 
   7) sayHiToHeadphonedRoommate(string)
        returns "I would love to!" if `string` is "Let's have dinner together!"`:
      ReferenceError: sayHiToHeadphonedRoommate is not defined
       at Context.<anonymous> (test/index-test.js:48:5)
-      at processImmediate (internal/timers.j
+      at processImmediate (node:internal/timers:464:21)
 ```
 
-Hm, seven failed tests - that seems like a lot to navigate. Let's go ahead and
-get Mocha set up to only show the first failing test. Find the test script in
-the `package.json` file and add the `--bail` tag to the end:
-
-```json
-"test": "mocha --timeout 5000 -R mocha-multi --reporter-options spec=-,json=.results.json --bail"
-```
-
-Save the file and run the tests. You should now see something like this:
-
-```console
-$ npm test
-
-> java-script-intro-to-functions-lab@0.1.0 test
-> mocha --timeout 5000 -R mocha-multi --reporter-options spec=-,json=.results.json --bail
-
-
-
-  shout(string)
-    1) receives one argument and returns it in all caps
-
-  0 passing (159ms)
-  1 failing
-
-  1) shout(string)
-       receives one argument and returns it in all caps:
-     ReferenceError: shout is not defined
-      at Context.<anonymous> (test/index-test.js:4:5)
-      at processImmediate (internal/timers.js:461:21)
-
-
-```
-
-Much better! Now let's see if we can get that first test to pass. Open up
-`index.js`.
+Hm, seven failed tests. Let's see if we can get that _first_ test to
+pass. Open up `index.js`.
 
 When we write our code, we follow the guidance of the tests. Let's take a look
 at that first error:
@@ -278,17 +246,59 @@ and run our tests again. We get:
   whisper(string)
     1) receives one argument and returns it in all lowercase
 
-  1 passing (147ms)
-  1 failing
+  logShout(string)
+    2) takes a string argument and logs it in all caps using console.log()
+
+  logWhisper(string)
+    3) takes a string argument and logs it in all lowercase using console.log()
+
+  sayHiToHeadphonedRoommate(string)
+    4) returns "I can't hear you!" if `string` is lowercase
+    5) returns "YES INDEED!" if `string` is uppercase
+    6) returns "I would love to!" if `string` is "Let's have dinner together!"`
+
+
+  1 passing (141ms)
+  6 failing
 
   1) whisper(string)
        receives one argument and returns it in all lowercase:
      ReferenceError: whisper is not defined
       at Context.<anonymous> (test/index-test.js:10:5)
-      at processImmediate (internal/timers.js:461:21)
+      at processImmediate (node:internal/timers:464:21)
+
+  2) logShout(string)
+       takes a string argument and logs it in all caps using console.log():
+     ReferenceError: logShout is not defined
+      at Context.<anonymous> (test/index-test.js:18:5)
+      at processImmediate (node:internal/timers:464:21)
+
+  3) logWhisper(string)
+       takes a string argument and logs it in all lowercase using console.log():
+     ReferenceError: logWhisper is not defined
+      at Context.<anonymous> (test/index-test.js:30:5)
+      at processImmediate (node:internal/timers:464:21)
+
+  4) sayHiToHeadphonedRoommate(string)
+       returns "I can't hear you!" if `string` is lowercase:
+     ReferenceError: sayHiToHeadphonedRoommate is not defined
+      at Context.<anonymous> (test/index-test.js:40:5)
+      at processImmediate (node:internal/timers:464:21)
+
+  5) sayHiToHeadphonedRoommate(string)
+       returns "YES INDEED!" if `string` is uppercase:
+     ReferenceError: sayHiToHeadphonedRoommate is not defined
+      at Context.<anonymous> (test/index-test.js:44:5)
+      at processImmediate (node:internal/timers:464:21)
+
+  6) sayHiToHeadphonedRoommate(string)
+       returns "I would love to!" if `string` is "Let's have dinner together!"`:
+     ReferenceError: sayHiToHeadphonedRoommate is not defined
+      at Context.<anonymous> (test/index-test.js:48:5)
+      at processImmediate (node:internal/timers:464:21)
 ```
 
-Hey! We got one to pass! Time to tackle the next error!
+Hey! We got one to pass! Six left.
 
 ## Your Turn
 
@@ -317,11 +327,10 @@ defined.
 > JavaScript, `.toLowerCase()` (e.g., `'HELLO'.toLowerCase()`) changes any
 > string to all lowercase.
 
-After you get `whisper(string)` passing, the next two tests will be checking to
-see if a specific string is logged when a function is called. You will still
-need to use the `.toUpperCase()` and `.toLowerCase()` methods for
-`logShout(string)` and `logWhisper(string)`. Keep in mind, though, that these
-tests are not looking for return values, only logs.
+The next two tests are checking to see if a specific string is logged when a
+function is called. You will still need to use the `.toUpperCase()` and
+`.toLowerCase()` methods for `logShout(string)` and `logWhisper(string)`. Keep
+in mind, though, that these tests are not looking for return values, only logs.
 
 The final function you need to create is `sayHiToHeadphonedRoommate()`. Your
 roommate is very into their music, so whispering can be a bit difficult, but
@@ -343,7 +352,7 @@ test conditions:
 How do we check if a string is all lowercase or all uppercase? Let's take a look
 using a REPL:
 
-<iframe height="400px" width="100%" src="https://replit.com/@lizbur10/InsubstantialTanInternet?lite=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
+<iframe height="400px" width="100%" src="https://repl.it/@LizBurton/InsubstantialTanInternet?lite=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
 
 In the first line we're defining a string variable. In the next two lines we log
 the original variable, then the variable after calling `toUpperCase()` on it.
@@ -352,9 +361,9 @@ the Run button, you'll see that the original string is mixed case and the upper
 cased version of it is (not surprisingly) uppercase. It should not come as a
 surprise, therefore, that comparing them with the equality operator (`===`)
 returns false. What do you think will happen if we initialize `string` to
-"HELLO!" instead? Play around with different values for `string` in [replit][]
-and see what happens. Also try doing the same thing with `toLowerCase()` and
-make sure you understand what's happening.
+"HELLO!" instead? Play around with different values for `string` and see what
+happens. Also try doing the same thing with `toLowerCase()` and make sure you
+understand what's happening.
 
 Basically, if we compare a string to its uppercased (or lowercased) version and
 the two values are equal, then we know that the original string is uppercase (or
@@ -374,4 +383,18 @@ handle that for you.
 
 Good luck!
 
-[replit]: https://replit.com/languages/javascript
+## Saving Your Work Remotely
+
+Currently, the work you've done on this assignment is only on your local
+machine. To preserve your solution on your GitHub fork, you will need to stage
+the changes you've made, commit them, and push the commit up to GitHub. Use the
+following commands to do this:
+
+```console
+$ git add .
+$ git commit -m "Completed assignment"
+$ git push
+```
+
+If you visit your fork on GitHub, you should now see that _you've_ made the most
+recent commit, and your code will be present in the files.
